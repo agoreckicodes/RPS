@@ -1,0 +1,1 @@
+This program contains a rudimentary Rocks, Paper, Scissors webpage that I created as part of The Odin Project curriculum.
