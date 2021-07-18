@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 <html>
     <header>
-        <script src="RPS.js"> </script>
+        <script src="RPS.js" defer></script>
     </header>
     <style>
-
+        .winnerText{
+            font-weight: bold;
+        }
     </style>
 
     
     <body>
-
+        <h1>
+            Rock, Paper, Scissors
+        </h1>
+        <p>
+            What is your choice?
+            
+        </p>
+        <div class = "buttons">
+            <button id = 'rock' class = 'btn' data-string = 'rock'>rock</button>
+            <button id = 'paper' class = 'btn' data-string = 'paper'>paper</button>
+            <button id = 'scissors' class = 'btn' data-string = 'scissors'>scissors</button>
+        </div>
+        <div class = 'score'></div>
+        <div class = "winnerText"></div>
+        <div class = 'textOutput'></div>
+        
+       
     </body>
 </html>

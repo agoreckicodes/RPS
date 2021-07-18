@@ -2,9 +2,13 @@
 //make function computerPlay which randomly returns R P or S
 let computerScore = 0;
 let playerScore = 0;
-let userName = getName();
+let userName = "Andrew";
+let result = '';
+const buttons = document.querySelectorAll('.btn');
+const score = document.querySelector('.score');
+const winnerText = document.querySelector('.winnerText');
+const textOutput = document.querySelector('.textOutput');
 
-bestOfFive();
 
 function computerPlay(){
     let randInt = Math.random() * 3;
@@ -18,88 +22,64 @@ function computerPlay(){
     }
     return compPlay;
 }
-//make funciton playerSelection which takes user input to decide on RPS
-function playerSelection(){
-    playerMove = prompt("Choose: Rock, Paper, or Scissors");
-    playerMove = playerMove.toLowerCase();
-    if(playerMove != "rock" && playerMove != "paper" && playerMove != "scissors"){
-        console.log("That is not a valid input. Please reply with rock, paper, or scissors.");
-        playerSelection();
-    }
-    return playerMove;
-}
-function getName(){
-    return prompt("What is your name?", "Andrew");
-}
-function printScore(){
-    console.log("The score is ");
-}
-//make function that plays a game of RPS using computerPlay and playerSelection
-function playGame(){
-    let playerMove = playerSelection();
-    let computerMove = computerPlay();
-    console.log(`Computer played: ${computerMove}. ${userName} played: ${playerMove}`);
+
+function playGame(playerMove, computerMove){
+    resetWinnerText();
     if(playerMove === computerMove){
-        console.log("It's a tie!");
+        result = "It's a tie!";
     }else if(playerMove === "rock"){
         if(computerMove === "scissors"){
-            console.log("You Win!");
+            result = "You Win!";
             playerScore++;
         }else{
-            console.log("You Lose.");
+            result = "You Lose.";
             computerScore++;
         }
     }else if(playerMove === "scissors"){
         if(computerMove === "paper"){
-            console.log("You Win!");
+            result = "You Win!";
             playerScore++;
         }else{
-            console.log("You Lose.");
+            result = "You Lose.";
             computerScore++;
         }
     }else{
         if(computerMove === "rock"){
-            console.log("You Win!");
+            result = "You Win!";
             playerScore++;
         }else{
-            console.log("You Lose.");
+            result = "You Lose.";
             computerScore++;
         }
     }
+    updateTextOutput(computerMove, playerMove);
+    score.textContent = `${userName}: ${playerScore} Computer: ${computerScore}`;
+    announceWinner();
 }
 
-function bestOfFive(){
-    let gameOn = true;
-   
-   
-    while(gameOn){
-        playGame();
-        if(computerScore === 3){
-            console.log(`You lost ${computerScore} to ${playerScore}`);
-            gameOn = false;
-        } else if(playerScore === 3){
-            console.log(`You won ${playerScore} to ${computerScore}`);
-            gameOn = false;
-        }else{
-            printScore();
-        }
-    }
-    playAgain();
-}
-function playAgain(){
-    resetScore();
-    let response = prompt("Play again?");
-    if(response.toLowerCase() === "yes"){
-        bestOfFive();
-    }else{
-        console.log("Thanks for playing!");
-    }
-}
 function resetScore(){
     computerScore = 0;
     playerScore = 0;
 }
-function printScore(){
-    console.log(`The score is ${userName}:${playerScore} to Computer:${computerScore}`);
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playGame(button.id, computerPlay());
+    })
+});
+
+function announceWinner(){
+    if (playerScore === 3){
+        winnerText.textContent = "You won best of five!";
+        resetScore();
+    } else if (computerScore === 3){
+        winnerText.textContent = "You lost best of five.";  
+        resetScore();
+    }
 }
-//make function game() that pays five rounds (best 3 of five)
+function updateTextOutput(computerMove, playerMove){
+    textOutput.textContent = `${userName} played: ${playerMove}. Computer played: ${computerMove}. ${result}`;
+}
+function resetWinnerText(){
+    winnerText.textContent = "";
+}
